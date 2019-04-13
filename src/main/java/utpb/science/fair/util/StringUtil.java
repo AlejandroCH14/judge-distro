@@ -42,8 +42,13 @@ public final class StringUtil {
 		Objects.requireNonNull(line, "can not tokenize a null String object");
 
 		List<String> tokens = new LinkedList<String>();
-		int beginIndex, endIndex, i = 0;
+		int beginIndex, i = 0;
 		int lineLength = line.length();
+
+		// skip over all leading whitespace characters
+		while (i < lineLength && Character.isWhitespace(line.charAt(i))) {
+			i++;
+		}
 
 		while (i < lineLength) {
 			beginIndex = i;
@@ -53,8 +58,7 @@ public final class StringUtil {
 				i++;
 			}
 
-			endIndex = i;
-			tokens.add(line.substring(beginIndex, endIndex));
+			tokens.add(line.substring(beginIndex, i));
 
 			// now skip over all whitespaces
 			while (i < lineLength && Character.isWhitespace(line.charAt(i))) {
