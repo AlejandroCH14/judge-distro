@@ -58,7 +58,7 @@ public class Judge {
 				"Judge[firstName=%s, lastName=%s, categories=[%s]]",
 				_firstName,
 				_lastName,
-				String.join("", _categories)
+				String.join(",", _categories)
 		);
 	}
 

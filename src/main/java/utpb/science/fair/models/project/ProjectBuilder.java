@@ -21,7 +21,7 @@ public class ProjectBuilder implements Builder<Project> {
 			return new Project(number, _tokens.get(1));
 		}
 
-		String category = String.join(" ", _tokens);
+		String category = String.join(" ", _tokens.subList(1, _tokens.size()) );
 
 		return new Project(number, category);
 	}

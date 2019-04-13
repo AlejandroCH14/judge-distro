@@ -1,6 +1,10 @@
 package utpb.science.fair.models.judge;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -23,6 +27,20 @@ public class JudgeBuilderTest {
 		Judge actual = judgeBuilder.build();
 
 		Assert.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testBuildAll() throws IOException {
+		List<String> file = Files.readAllLines(Paths.get("src/test/resources/judges.txt"));
+		List<Judge> judges = new LinkedList<>();
+		Judge judge = null;
+
+		for (String line : file) {
+			judge = new JudgeBuilder(line).build();
+			judges.add(judge);
+		}
+		
+		Assert.assertEquals(file.size(), judges.size());
 	}
 
 }

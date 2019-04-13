@@ -22,9 +22,9 @@ public class StringUtilTest {
 
 	@Test
 	public void testTokenizeString() {
-		final String line = "\t\t\n\r\n John                  Doe   ";
+		final String line = "\t\t\n\r\n401   John                  Doe   ";
 
-		final List<String> expected = Arrays.asList("John", "Doe");
+		final List<String> expected = Arrays.asList("401", "John", "Doe");
 
 		final List<String> actual = StringUtil.tokenize(line);
 

@@ -30,11 +30,12 @@ public final class StringUtil {
 		final List<String> tokens = new LinkedList<>();
 		final int lineLength = line.length();
 		int beginIndex, i = 0;
-		char c = ' ';
+		char c = line.charAt(i);
 
 		// skip over all leading whitespaces, tabs, and new lines
-		while (i < lineLength && !Character.isAlphabetic((int) line.charAt(i))) {
+		while (i < lineLength && (c == ' ' || c == '\t' || c == '\r' || c == '\n')) {
 			i++;
+			c = line.charAt(i);
 		}
 
 		while (i < lineLength) {
@@ -74,10 +75,12 @@ public final class StringUtil {
 		final List<String> tokens = new LinkedList<String>();
 		final int lineLength = line.length();
 		int beginIndex, i = 0;
+		char c = line.charAt(i);
 
 		// skip over all whitespace, tabs (\t), and new line characters (\r\n)
-		while (i < lineLength && !Character.isAlphabetic(line.charAt(i))) {
+		while (i < lineLength && (c == ' ' || c == '\t' || c == '\r' || c == '\n')) {
 			i++;
+			c = line.charAt(i);
 		}
 
 		while (i < lineLength) {
