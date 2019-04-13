@@ -24,6 +24,36 @@ public final class StringUtil {
 		return true;
 	}
 
+	public static List<String> tokenize(String line, char delimiter) {
+		Objects.requireNonNull(line, "can not tokenize a null String object");
+
+		final List<String> tokens = new LinkedList<>();
+		final int lineLength = line.length();
+		int beginIndex, i = 0;
+		char c = ' ';
+
+		// skip over all leading whitespaces, tabs, and new lines
+		while (i < lineLength && !Character.isAlphabetic((int) line.charAt(i))) {
+			i++;
+		}
+
+		while (i < lineLength) {
+			beginIndex = i;
+
+			while (i < lineLength && line.charAt(i) != delimiter) {
+				i++;
+			}
+
+			tokens.add(line.substring(beginIndex, i++));
+
+			// now skip over all whitespaces
+			while (i < lineLength && Character.isWhitespace(line.charAt(i))) {
+				i++;
+			}
+		}
+		return tokens;
+	}
+
 	/**
 	 * Tokenizes the given string by whitespace.<br>
 	 * <br>
@@ -41,12 +71,12 @@ public final class StringUtil {
 	public static List<String> tokenize(String line) {
 		Objects.requireNonNull(line, "can not tokenize a null String object");
 
-		List<String> tokens = new LinkedList<String>();
+		final List<String> tokens = new LinkedList<String>();
+		final int lineLength = line.length();
 		int beginIndex, i = 0;
-		int lineLength = line.length();
 
-		// skip over all leading whitespace characters
-		while (i < lineLength && Character.isWhitespace(line.charAt(i))) {
+		// skip over all whitespace, tabs (\t), and new line characters (\r\n)
+		while (i < lineLength && !Character.isAlphabetic(line.charAt(i))) {
 			i++;
 		}
 
@@ -58,7 +88,7 @@ public final class StringUtil {
 				i++;
 			}
 
-			tokens.add(line.substring(beginIndex, i));
+			tokens.add(line.substring(beginIndex, i++));
 
 			// now skip over all whitespaces
 			while (i < lineLength && Character.isWhitespace(line.charAt(i))) {
