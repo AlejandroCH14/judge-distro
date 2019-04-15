@@ -11,16 +11,42 @@ import utpb.science.fair.models.ListBuilder;
 import utpb.science.fair.models.project.Project;
 import utpb.science.fair.models.project.ProjectCategoryNameComparator;
 
-public class CategoryListBuilder implements ListBuilder<Category> {
+/**
+ * Builds a List of Category objects where each Category object has a List of
+ * Projects associated with said Category.
+ * 
+ */
+public class CategoryProjectsListBuilder implements ListBuilder<Category> {
 
+	/**
+	 * A sorted array of all available Categories.
+	 */
 	private final String[] _categories = Category.CATEGORIES;
 	private final List<Project> _projects;
 
-	public CategoryListBuilder(List<Project> projects) {
+	/**
+	 * The List of Projects from which to build the List of Category objects. The
+	 * given List is immediately sorted to facilitate the build process.
+	 * 
+	 * @param projects the List of Projects (non-null)
+	 */
+	public CategoryProjectsListBuilder(List<Project> projects) {
 		_projects = Objects.requireNonNull(projects);
 		Collections.sort(_projects, new ProjectCategoryNameComparator());
 	}
 
+	/**
+	 * Returns the first index of the Project object in the List that matches the
+	 * given Predicate. If the Project does not exist in the List then
+	 * <code>-1</code> is returned.
+	 * 
+	 * @param begin     the beginning index to start searching from in the List
+	 *                  (inclusive)
+	 * @param end       the ending index in the List (exclusive)
+	 * @param projects  the List of Projects to search in.
+	 * @param predicate the predicate
+	 * @return
+	 */
 	private int indexOf(int begin, int end, List<Project> projects, Predicate<Project> predicate) {
 		final int size = projects.size();
 
@@ -49,6 +75,15 @@ public class CategoryListBuilder implements ListBuilder<Category> {
 		return -1;
 	}
 
+	/**
+	 * Creates an array of integers where each value in the array is the first index
+	 * of the Category in the List of Projects that passed in via the contructor.
+	 * Each index in the create integer array corresponds with the Categories array.
+	 * If a Category is without a Project then a value of <code>-1</code> is
+	 * assigned as the value.
+	 * 
+	 * @return an integer array.
+	 */
 	private int[] getStartingIndicies() {
 		final int totalProjects = _projects.size();
 		final int totalCategories = _categories.length;
@@ -76,6 +111,9 @@ public class CategoryListBuilder implements ListBuilder<Category> {
 		return indices;
 	}
 
+	/**
+	 * Builds the List of Category objects based on the given List of Projects.
+	 */
 	@Override
 	public List<Category> build() {
 		final List<Category> categories = new ArrayList<>(_categories.length);

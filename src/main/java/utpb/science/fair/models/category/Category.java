@@ -42,6 +42,10 @@ public class Category implements Comparable<Category> {
 	public String getName() {
 		return _name;
 	}
+	
+	public List<Project> getProjects() {
+		return _projects;
+	}
 
 	public boolean addProject(Project project) {
 		return _projects.add(Objects.requireNonNull(project));

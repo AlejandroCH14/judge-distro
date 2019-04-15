@@ -28,7 +28,7 @@ public class ProjectBuilderTest {
 	
 	@Test
 	public void testBuildAll() throws IOException {
-		List<String> file = Files.readAllLines(Paths.get("src/test/resources/projects.txt"));
+		List<String> file = Files.readAllLines(Paths.get("src/test/resources/projects/projects.txt"));
 		List<Project> projects = new LinkedList<>();
 		List<String> tokens = null;
 		Project project = null;
