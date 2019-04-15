@@ -1,11 +1,8 @@
 package utpb.science.fair.models.category;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,9 +14,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import utpb.science.fair.models.project.Project;
-import utpb.science.fair.models.project.ProjectBuilder;
 import utpb.science.fair.models.project.ProjectCategoryNameComparator;
-import utpb.science.fair.util.StringUtil;
+import utpb.science.fair.util.FileUtil;
 
 @RunWith(Parameterized.class)
 public class CategoryProjectsListBuilderTest {
@@ -50,7 +46,7 @@ public class CategoryProjectsListBuilderTest {
 	 */
 	@Test
 	public void testBuild() throws IOException {
-		List<Project> projects = readProjectsFile(_fileName);
+		List<Project> projects = FileUtil.readProjectsFile(_fileName);
 		List<Category> categories = new CategoryProjectsListBuilder(projects).build();
 		
 		Set<Project> distinctProjects = new TreeSet<>(new ProjectCategoryNameComparator());
@@ -82,19 +78,5 @@ public class CategoryProjectsListBuilderTest {
 
 		Assert.assertTrue(actualTotalCount == expectedTotalCount);
 	}
-
-	private List<Project> readProjectsFile(String fileName) throws IOException {
-		List<String> file = Files.readAllLines(Paths.get(fileName));
-		List<Project> projects = new LinkedList<>();
-		List<String> tokens = null;
-		Project project = null;
-
-		for (String line : file) {
-			tokens = StringUtil.tokenize(line);
-			project = new ProjectBuilder(tokens).build();
-			projects.add(project);
-		}
-
-		return projects;
-	}
+	
 }

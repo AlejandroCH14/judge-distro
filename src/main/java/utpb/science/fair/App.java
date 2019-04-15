@@ -2,57 +2,36 @@ package utpb.science.fair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 
 import utpb.science.fair.models.judge.Judge;
-import utpb.science.fair.models.judge.JudgeBuilder;
 import utpb.science.fair.models.project.Project;
-import utpb.science.fair.models.project.ProjectBuilder;
-import utpb.science.fair.util.StringUtil;
+import utpb.science.fair.util.FileUtil;
 
 public class App {
 
+	public static final String PROJECTS_FILE = "src/test/resources/projects/projects.txt";
+
+	public static final String JUDGES_FILE = "src/test/resources/judges.txt";
+
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		App app = new App();
+		
+		System.out.println("=============================================================================");
+		System.out.println("PROJECTS");
+		System.out.println("=============================================================================");
+		
+		List<Project> projects = FileUtil.readProjectsFile(PROJECTS_FILE);
+		projects.stream().forEach(System.out::println);
+		System.out.println("Total Projects: " + projects.size());
 
-		List<Project> projects = app.readProjectsFile();
+		System.out.println("\n=============================================================================");
+		System.out.println("JUDGES");
+		System.out.println("=============================================================================");
 
-		System.out.println("(=============================================================================");
-
-		List<Judge> judges = app.readJudgesFiles();
+		List<Judge> judges = FileUtil.readJudgesFiles(JUDGES_FILE);
 		judges.stream().forEach(System.out::println);
+		System.out.println("Total Judges: "+ judges.size());
 
-	}
-
-	public List<Judge> readJudgesFiles() throws IOException, URISyntaxException {
-		List<String> file = Files.readAllLines(Paths.get("src/test/resources/judges.txt"));
-		List<Judge> judges = new LinkedList<>();
-		Judge judge = null;
-
-		for (String line : file) {
-			judge = new JudgeBuilder(line).build();
-			judges.add(judge);
-		}
-
-		return judges;
-	}
-
-	public List<Project> readProjectsFile() throws IOException {
-		List<String> file = Files.readAllLines(Paths.get("src/test/resources/projects.txt"));
-		List<Project> projects = new LinkedList<>();
-		List<String> tokens = null;
-		Project project = null;
-
-		for (String line : file) {
-			tokens = StringUtil.tokenize(line);
-			project = new ProjectBuilder(tokens).build();
-			projects.add(project);
-		}
-
-		return projects;
 	}
 
 }
