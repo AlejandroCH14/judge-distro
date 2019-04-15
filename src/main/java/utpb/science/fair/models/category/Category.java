@@ -1,12 +1,16 @@
-package utpb.science.fair.models;
+package utpb.science.fair.models.category;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import utpb.science.fair.models.judge.Judge;
 import utpb.science.fair.models.project.Project;
 
-public class Category {
+public class Category implements Comparable<Category> {
+
+	public static final String[] CATEGORIES = { "Behavioral/Social Science", "Chemistry", "Earth/Space Science",
+			"Environmental Science", "Life Science", "Mathematics/Physics" };
 
 	public static final String BEHAVIORAL_SOCIAL_SCIENCE = "Behavioral/Social Science";
 
@@ -23,6 +27,8 @@ public class Category {
 	private final String _name;
 
 	private List<Project> _projects = new LinkedList<>();
+
+	private List<Judge> _judges = new LinkedList<>();
 
 	public Category(String name) {
 		_name = Objects.requireNonNull(name);
@@ -45,9 +51,25 @@ public class Category {
 		return _projects.remove(Objects.requireNonNull(project));
 	}
 
+	public List<Judge> getJudges() {
+		return _judges;
+	}
+
+	public void setJudges(List<Judge> judges) {
+		_judges = judges;
+	}
+
+	public boolean addJudge(Judge judge) {
+		return _judges.add(judge);
+	}
+
+	public boolean removeJudge(Judge judge) {
+		return _judges.remove(judge);
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(_name, _projects);
+		return Objects.hash(_judges, _name, _projects);
 	}
 
 	@Override
@@ -59,7 +81,13 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return Objects.equals(_name, other._name) && Objects.equals(_projects, other._projects);
+		return Objects.equals(_judges, other._judges) && Objects.equals(_name, other._name)
+				&& Objects.equals(_projects, other._projects);
+	}
+
+	@Override
+	public int compareTo(Category o) {
+		return _name.compareToIgnoreCase(o.getName());
 	}
 
 }

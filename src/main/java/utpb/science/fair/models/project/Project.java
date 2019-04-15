@@ -2,7 +2,7 @@ package utpb.science.fair.models.project;
 
 import java.util.Objects;
 
-public class Project {
+public class Project implements Comparable<Project> {
 
 	private final int _number;
 	private final String _category;
@@ -16,7 +16,7 @@ public class Project {
 		return _number;
 	}
 
-	public String getCategory() {
+	public String getCategoryName() {
 		return _category;
 	}
 
@@ -40,6 +40,11 @@ public class Project {
 	@Override
 	public String toString() {
 		return "Project [number=" + _number + ", category=" + _category + "]";
+	}
+
+	@Override
+	public int compareTo(Project o) {
+		return _number - o.getNumber();
 	}
 
 }
