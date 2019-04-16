@@ -1,6 +1,7 @@
 package utpb.science.fair.models.judge;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,6 +61,11 @@ public class JudgeBuilder implements Builder<Judge> {
 		return StringUtil.tokenize(str, ',');
 	}
 
+	/**
+	 * Creates an instance of type {@link Judge} with the created Name and Category
+	 * tokens. The list of categories that is associated with this judge are sorted
+	 * in ascending order with the {@link String#CASE_INSENSITIVE_ORDER} comparator.
+	 */
 	@Override
 	public Judge build() {
 		final List<String> nameTokens = getNameTokens();
@@ -68,6 +74,7 @@ public class JudgeBuilder implements Builder<Judge> {
 		final String firstName = nameTokens.get(0);
 		final String lastName = nameTokens.get(1);
 		final List<String> categories = new ArrayList<>(categoriesTokens);
+		Collections.sort(categories, String.CASE_INSENSITIVE_ORDER);
 
 		return new Judge(firstName, lastName, categories);
 	}

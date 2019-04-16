@@ -1,6 +1,8 @@
 package utpb.science.fair;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,10 +22,49 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 
+		App app = new App();
+
 		List<Project> projects = FileUtil.readProjectsFile(PROJECTS_FILE);
+
+		List<Judge> judges = FileUtil.readJudgesFiles(JUDGES_FILE);
 
 		List<Category> categories = new CategoryProjectsListBuilder(projects).build();
 
+//		app.divideIntoGroups(categories);
+
+		app.assignJudgesToCategories(categories, judges);
+
+	}
+
+	public void assignJudgesToCategories(List<Category> categories, List<Judge> judges) {
+		Collections.sort(categories);
+		final String[] CATEGORIES = Category.CATEGORIES; // already sorted
+		int index = -1;
+
+		for (Judge judge : judges) {
+			for (String category : judge.getCategories()) {
+				// the list of categories for each judge are already sorted, thus
+				index = Arrays.binarySearch(CATEGORIES, category);
+				if (index < 0) {
+					continue;
+				}
+				categories.get(index).addJudge(judge);
+			}
+		}
+
+		// now print the judges that each category has
+		for (Category category : categories) {
+			System.out.println("================================================================");
+			System.out.println(category.getName());
+			System.out.println("================================================================");
+			for (Judge judge : category.getJudges()) {
+				System.out.println(judge.getFullName());
+			}
+			System.out.println("================================================================\n");
+		}
+	}
+
+	public void divideIntoGroups(List<Category> categories) {
 		List<List<Group>> scienceFairGroups = new LinkedList<>();
 
 		List<Group> groups = new LinkedList<>();
@@ -42,12 +83,12 @@ public class App {
 				}
 			}
 		}
-		
-		System.out.println("\nTotal Projects: " + n);
-		System.out.println("\nTotal Projects: " + projects.size());
+
+//		System.out.println("\nTotal Projects: " + n);
+//		System.out.println("\nTotal Projects: " + projects.size());
 	}
 
-	public void foo() throws IOException {
+	public void printProjects() throws IOException {
 		System.out.println("=============================================================================");
 		System.out.println("PROJECTS");
 		System.out.println("=============================================================================");
@@ -57,7 +98,7 @@ public class App {
 		System.out.println("Total Projects: " + projects.size());
 	}
 
-	public void bar() throws IOException {
+	public void printJudges() throws IOException {
 		System.out.println("\n=============================================================================");
 		System.out.println("JUDGES");
 		System.out.println("=============================================================================");
