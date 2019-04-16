@@ -1,5 +1,6 @@
 package utpb.science.fair.models.category;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class Category implements Comparable<Category> {
 	public String getName() {
 		return _name;
 	}
-	
+
 	public List<Project> getProjects() {
 		return _projects;
 	}
@@ -97,6 +98,33 @@ public class Category implements Comparable<Category> {
 	@Override
 	public String toString() {
 		return "Category [_name=" + _name + "]";
+	}
+
+	/**
+	 * To be used with {@link java.util.PriorityQueue} to queue a List of
+	 * {@link Category} objects, where the head of the queue is the Category with
+	 * the most {@link Project}s.
+	 */
+	public static final Comparator<Category> PROJECTS_IN_CATEGORY_COMPARATOR = new ProjectsCountComparator();
+
+	private static class ProjectsCountComparator implements Comparator<Category> {
+
+		@Override
+		public int compare(Category o1, Category o2) {
+			return o2.getProjects().size() - o1.getProjects().size();
+		}
+
+	}
+
+	public static final Comparator<Category> JUDGES_IN_CATEGORY_COMPARATOR = new JudgesCountComparator();
+
+	private static class JudgesCountComparator implements Comparator<Category> {
+
+		@Override
+		public int compare(Category o1, Category o2) {
+			return o1.getJudges().size() - o2.getJudges().size();
+		}
+
 	}
 
 }
