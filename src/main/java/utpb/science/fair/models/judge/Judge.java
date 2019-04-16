@@ -1,5 +1,6 @@
 package utpb.science.fair.models.judge;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,12 +55,19 @@ public class Judge {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Judge[firstName=%s, lastName=%s, categories=[%s]]",
-				_firstName,
-				_lastName,
-				String.join(",", _categories)
-		);
+		return String.format("Judge[firstName=%s, lastName=%s, categories=[%s]]", _firstName, _lastName,
+				String.join(",", _categories));
+	}
+
+	public static final Comparator<Judge> CATEGORY_COUNT_COMPARATOR = new CategoryCountComparator();
+
+	private static class CategoryCountComparator implements Comparator<Judge> {
+
+		@Override
+		public int compare(Judge o1, Judge o2) {
+			return o1.getCategories().size() - o2.getCategories().size();
+		}
+
 	}
 
 }

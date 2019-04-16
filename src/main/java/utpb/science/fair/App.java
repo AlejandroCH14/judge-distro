@@ -31,22 +31,40 @@ public class App {
 
 		List<Category> categories = new CategoryProjectsListBuilder(projects).build();
 
-//		app.divideIntoGroups(categories);
+		app.divideIntoGroups(categories);
 
 		app.assignJudgesToCategories(categories, judges);
 
-		app.testPriorityQueue(categories);
+		System.out.println();
+		
+		app.testAvailableResourcesQueue(judges);
+
+		System.out.println();
+		
+		app.testTaskQueue(categories);
 
 	}
 
-	public void testPriorityQueue(List<Category> categories) {
-		PriorityQueue<Category> projectCountPQ = new PriorityQueue<Category>(Category.PROJECTS_IN_CATEGORY_COMPARATOR);
-		projectCountPQ.addAll(categories);
+	public void testAvailableResourcesQueue(List<Judge> judges) {
+		PriorityQueue<Judge> resourcesQ = new PriorityQueue<Judge>(Judge.CATEGORY_COUNT_COMPARATOR);
+		resourcesQ.addAll(judges);
+
+		Judge judge = null;
+
+		while (!resourcesQ.isEmpty()) {
+			judge = resourcesQ.poll();
+			System.out.format("%s = %d%n", judge.getFullName(), judge.getCategories().size());
+		}
+	}
+
+	public void testTaskQueue(List<Category> categories) {
+		PriorityQueue<Category> taskQ = new PriorityQueue<Category>(Category.PROJECTS_IN_CATEGORY_COMPARATOR);
+		taskQ.addAll(categories);
 
 		Category category = null;
 
-		while (!projectCountPQ.isEmpty()) {
-			category = projectCountPQ.poll();
+		while (!taskQ.isEmpty()) {
+			category = taskQ.poll();
 			System.out.format("%s = %d%n", category.getName(), category.getProjects().size());
 		}
 
@@ -91,17 +109,20 @@ public class App {
 			scienceFairGroups.add(groups);
 		}
 
-//		int n = 0;
-//		for (List<Group> gs : scienceFairGroups) {
-//			for (Group g : gs) {
-//				System.out.println(g);
-//				for (Project p : g.getProjects()) {
-//					n++;
-//				}
-//			}
-//		}
+		int groupsCount = 0;
+		int projectsCount = 0;
+		for (List<Group> gs : scienceFairGroups) {
+			for (Group g : gs) {
+				groupsCount++;
+				System.out.println(g);
+				for (Project p : g.getProjects()) {
+					projectsCount++;
+				}
+			}
+		}
 
-//		System.out.println("\nTotal Projects: " + n);
+		System.out.println("\nTotal Groups: " + groupsCount);
+		System.out.println("Total Projects: " + projectsCount);
 	}
 
 	public void printProjects() throws IOException {

@@ -116,15 +116,4 @@ public class Category implements Comparable<Category> {
 
 	}
 
-	public static final Comparator<Category> JUDGES_IN_CATEGORY_COMPARATOR = new JudgesCountComparator();
-
-	private static class JudgesCountComparator implements Comparator<Category> {
-
-		@Override
-		public int compare(Category o1, Category o2) {
-			return o1.getJudges().size() - o2.getJudges().size();
-		}
-
-	}
-
 }
