@@ -14,9 +14,9 @@ public final class SeedWork {
 			"Environmental Science", "Life Science", "Mathematics/Physics" };
 
 	/**
-	 * Creates a <code>projects.txt</code> file with 300 projects, numbered 400-700, to use as
-	 * dummy data. The file has whitespaces before and after the project number and
-	 * project name.
+	 * Creates a <code>projects.txt</code> file with 301 projects, numbered 400-700,
+	 * to use as dummy data. The file has whitespaces before and after the project
+	 * number and project name.
 	 */
 	public void createProjectsFile() {
 		final String fileName = "projects.txt";

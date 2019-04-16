@@ -24,6 +24,14 @@ public final class StringUtil {
 		return true;
 	}
 
+	/**
+	 * Essentially does the exact same thing as {@link #tokenize(String)} but with
+	 * the given delimiter character instead of a whitespace.
+	 * 
+	 * @param line      the line to tokenize, must be non-null
+	 * @param delimiter the delimiter to be used to tokenize the given line
+	 * @return a {@link List} of tokens as {@link String} objects.
+	 */
 	public static List<String> tokenize(String line, char delimiter) {
 		Objects.requireNonNull(line, "can not tokenize a null String object");
 
@@ -67,7 +75,7 @@ public final class StringUtil {
 	 * </code>
 	 * 
 	 * @param line the line to tokenize (must be non-null).
-	 * @return a list of tokens.
+	 * @return a {@link List} of tokens as {@link String} objects.
 	 */
 	public static List<String> tokenize(String line) {
 		Objects.requireNonNull(line, "can not tokenize a null String object");
