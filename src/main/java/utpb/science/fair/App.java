@@ -1,7 +1,6 @@
 package utpb.science.fair;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import utpb.science.fair.models.judge.Judge;
@@ -10,11 +9,11 @@ import utpb.science.fair.util.FileUtil;
 
 public class App {
 
-	public static final String PROJECTS_FILE = "src/test/resources/projects/projects.txt";
+	public static final String PROJECTS_FILE = "src/test/resources/projects/given-projects.txt";
 
-	public static final String JUDGES_FILE = "src/test/resources/judges.txt";
+	public static final String JUDGES_FILE = "src/test/resources/given-judges.txt";
 
-	public static void main(String[] args) throws IOException, URISyntaxException {
+	public static void main(String[] args) throws IOException {
 		
 		System.out.println("=============================================================================");
 		System.out.println("PROJECTS");

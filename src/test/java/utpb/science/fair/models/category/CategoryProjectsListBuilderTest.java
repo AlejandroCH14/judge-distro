@@ -24,6 +24,7 @@ public class CategoryProjectsListBuilderTest {
 	@Parameters
 	public static List<String> data() {
 		return Arrays.asList(
+				"src/test/resources/projects/given-projects.txt",
 				"src/test/resources/projects/one-category.txt",
 				"src/test/resources/projects/two-categories.txt",
 				"src/test/resources/projects/three-categories.txt",

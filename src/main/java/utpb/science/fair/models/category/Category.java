@@ -94,4 +94,9 @@ public class Category implements Comparable<Category> {
 		return _name.compareToIgnoreCase(o.getName());
 	}
 
+	@Override
+	public String toString() {
+		return "Category [_name=" + _name + "]";
+	}
+
 }

@@ -31,7 +31,7 @@ public class JudgeBuilderTest {
 	
 	@Test
 	public void testBuildAll() throws IOException {
-		List<String> file = Files.readAllLines(Paths.get("src/test/resources/judges.txt"));
+		List<String> file = Files.readAllLines(Paths.get("src/test/resources/given-judges.txt"));
 		List<Judge> judges = new LinkedList<>();
 		Judge judge = null;
 
