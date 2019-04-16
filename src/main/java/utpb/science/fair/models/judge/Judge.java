@@ -59,6 +59,10 @@ public class Judge {
 				String.join(",", _categories));
 	}
 
+	/**
+	 * Sorts or prioritizes the Judge with the least amount of Categories that the
+	 * Judge can oversee.
+	 */
 	public static final Comparator<Judge> CATEGORY_COUNT_COMPARATOR = new CategoryCountComparator();
 
 	private static class CategoryCountComparator implements Comparator<Judge> {

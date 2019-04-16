@@ -101,9 +101,7 @@ public class Category implements Comparable<Category> {
 	}
 
 	/**
-	 * To be used with {@link java.util.PriorityQueue} to queue a List of
-	 * {@link Category} objects, where the head of the queue is the Category with
-	 * the most {@link Project}s.
+	 * Sorts or prioritizes the Croup with the most Projects.
 	 */
 	public static final Comparator<Category> PROJECTS_IN_CATEGORY_COMPARATOR = new ProjectsCountComparator();
 

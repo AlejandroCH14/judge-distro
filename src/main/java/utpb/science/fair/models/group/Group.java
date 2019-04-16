@@ -1,6 +1,7 @@
 package utpb.science.fair.models.group;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,6 +100,20 @@ public class Group {
 //				projects);
 
 		return String.format("%s_%d%nProjects: %s%n%n", _categoryName, _groupNumber, projects);
+	}
+	
+	/**
+	 * Sorts or prioritizes the Group with the smallest project count.
+	 */
+	public static final Comparator<Group> PROJECT_COUNT_COMPARATOR = new ProjectCountComparator();
+	
+	private static class ProjectCountComparator implements Comparator<Group> {
+
+		@Override
+		public int compare(Group o1, Group o2) {
+			return o1.getProjects().size() - o2.getProjects().size();
+		}
+		
 	}
 
 }
