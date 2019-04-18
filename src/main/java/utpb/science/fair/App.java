@@ -31,44 +31,52 @@ public class App {
 
 		List<Category> categories = new CategoryProjectsListBuilder(projects).build();
 
-		app.divideIntoGroups(categories);
+		List<List<Group>> scienceFairGroups = app.createAllCategoryGroups(categories);
 
 		app.assignJudgesToCategories(categories, judges);
 
 		System.out.println();
-		
-		app.testAvailableResourcesQueue(judges);
+
+		PriorityQueue<Judge> resources = app.createResourcesQueue(judges);
 
 		System.out.println();
-		
-		app.testTaskQueue(categories);
+
+		PriorityQueue<Category> tasks = app.createTaskQueue(categories);
 
 	}
 
-	public void testAvailableResourcesQueue(List<Judge> judges) {
+	public PriorityQueue<Judge> createResourcesQueue(List<Judge> judges) {
 		PriorityQueue<Judge> resourcesQ = new PriorityQueue<Judge>(Judge.LEAST_CATEGORY_COUNT);
 		resourcesQ.addAll(judges);
 
 		Judge judge = null;
 
+		System.out.println("================================================================");
+		System.out.println("Resources");
+		System.out.println("================================================================");
 		while (!resourcesQ.isEmpty()) {
 			judge = resourcesQ.poll();
 			System.out.format("%s = %d%n", judge.getFullName(), judge.getCategories().size());
 		}
+
+		return resourcesQ;
 	}
 
-	public void testTaskQueue(List<Category> categories) {
+	public PriorityQueue<Category> createTaskQueue(List<Category> categories) {
 		PriorityQueue<Category> taskQ = new PriorityQueue<Category>(Category.GREATEST_PROJECT_COUNT);
 		taskQ.addAll(categories);
 
 		Category category = null;
 
+		System.out.println("================================================================");
+		System.out.println("Tasks");
+		System.out.println("================================================================");
 		while (!taskQ.isEmpty()) {
 			category = taskQ.poll();
 			System.out.format("%s = %d%n", category.getName(), category.getProjects().size());
 		}
 
-//		projectCountPQ.stream().forEach(System.out::println);
+		return taskQ;
 	}
 
 	public void assignJudgesToCategories(List<Category> categories, List<Judge> judges) {
@@ -88,27 +96,29 @@ public class App {
 		}
 
 		// now print the judges that each category has
-//		for (Category category : categories) {
-//			System.out.println("================================================================");
-//			System.out.println(category.getName());
-//			System.out.println("================================================================");
-//			for (Judge judge : category.getJudges()) {
-//				System.out.println(judge.getFullName());
-//			}
-//			System.out.println("================================================================\n");
-//		}
+		for (Category category : categories) {
+			System.out.println("================================================================");
+			System.out.println(category.getName());
+			System.out.println("================================================================");
+			for (Judge judge : category.getJudges()) {
+				System.out.println(judge.getFullName());
+			}
+			System.out.println("================================================================\n");
+		}
 	}
 
-	public void divideIntoGroups(List<Category> categories) {
+	public List<List<Group>> createAllCategoryGroups(List<Category> categories) {
+		// a science fair will have 1...* many groups
 		List<List<Group>> scienceFairGroups = new LinkedList<>();
-
 		List<Group> groups = new LinkedList<>();
 
+		// each category will have 1...* many to groups
 		for (Category category : categories) {
 			groups = new GroupListBuilder(category).build();
 			scienceFairGroups.add(groups);
 		}
 
+		// make sure we have account for all projects
 		int groupsCount = 0;
 		int projectsCount = 0;
 		for (List<Group> gs : scienceFairGroups) {
@@ -123,6 +133,8 @@ public class App {
 
 		System.out.println("\nTotal Groups: " + groupsCount);
 		System.out.println("Total Projects: " + projectsCount);
+
+		return scienceFairGroups;
 	}
 
 	public void printProjects() throws IOException {

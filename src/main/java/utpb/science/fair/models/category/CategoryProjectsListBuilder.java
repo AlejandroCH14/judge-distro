@@ -25,7 +25,7 @@ public class CategoryProjectsListBuilder implements ListBuilder<Category> {
 
 	/**
 	 * The List of Projects from which to build the List of Category objects. The
-	 * given List of Projcts is immediately sorted in ascending order by category to
+	 * given List of Projects is immediately sorted in ascending order by category to
 	 * facilitate the build process.
 	 * 
 	 * @param projects the List of Projects (non-null)
