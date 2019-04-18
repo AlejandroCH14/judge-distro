@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import utpb.science.fair.models.project.Project;
-import utpb.science.fair.models.project.ProjectCategoryNameComparator;
 import utpb.science.fair.util.FileUtil;
 
 @RunWith(Parameterized.class)
@@ -50,7 +49,7 @@ public class CategoryProjectsListBuilderTest {
 		List<Project> projects = FileUtil.readProjectsFile(_fileName);
 		List<Category> categories = new CategoryProjectsListBuilder(projects).build();
 		
-		Set<Project> distinctProjects = new TreeSet<>(new ProjectCategoryNameComparator());
+		Set<Project> distinctProjects = new TreeSet<>(Project.CATEGORY_NAME_ASCENDING);
 		distinctProjects.addAll(projects);
 		
 		List<String> expectedCategoryNames = new ArrayList<>(distinctProjects.size());

@@ -103,7 +103,7 @@ public class Category implements Comparable<Category> {
 	/**
 	 * Sorts or prioritizes the Croup with the most Projects.
 	 */
-	public static final Comparator<Category> PROJECTS_IN_CATEGORY_COMPARATOR = new ProjectsCountComparator();
+	public static final Comparator<Category> GREATEST_PROJECT_COUNT = new ProjectsCountComparator();
 
 	private static class ProjectsCountComparator implements Comparator<Category> {
 

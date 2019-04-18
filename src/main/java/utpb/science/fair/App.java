@@ -46,7 +46,7 @@ public class App {
 	}
 
 	public void testAvailableResourcesQueue(List<Judge> judges) {
-		PriorityQueue<Judge> resourcesQ = new PriorityQueue<Judge>(Judge.CATEGORY_COUNT_COMPARATOR);
+		PriorityQueue<Judge> resourcesQ = new PriorityQueue<Judge>(Judge.LEAST_CATEGORY_COUNT);
 		resourcesQ.addAll(judges);
 
 		Judge judge = null;
@@ -58,7 +58,7 @@ public class App {
 	}
 
 	public void testTaskQueue(List<Category> categories) {
-		PriorityQueue<Category> taskQ = new PriorityQueue<Category>(Category.PROJECTS_IN_CATEGORY_COMPARATOR);
+		PriorityQueue<Category> taskQ = new PriorityQueue<Category>(Category.GREATEST_PROJECT_COUNT);
 		taskQ.addAll(categories);
 
 		Category category = null;

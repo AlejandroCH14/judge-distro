@@ -63,7 +63,7 @@ public class Judge {
 	 * Sorts or prioritizes the Judge with the least amount of Categories that the
 	 * Judge can oversee.
 	 */
-	public static final Comparator<Judge> CATEGORY_COUNT_COMPARATOR = new CategoryCountComparator();
+	public static final Comparator<Judge> LEAST_CATEGORY_COUNT = new CategoryCountComparator();
 
 	private static class CategoryCountComparator implements Comparator<Judge> {
 

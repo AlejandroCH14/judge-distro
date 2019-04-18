@@ -1,5 +1,6 @@
 package utpb.science.fair.models.project;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Project implements Comparable<Project> {
@@ -45,6 +46,20 @@ public class Project implements Comparable<Project> {
 	@Override
 	public int compareTo(Project o) {
 		return _number - o.getNumber();
+	}
+
+	/**
+	 * Sorts Project in ascending order by category name.
+	 */
+	public static final Comparator<Project> CATEGORY_NAME_ASCENDING = new CategoryName();
+
+	private static class CategoryName implements Comparator<Project> {
+
+		@Override
+		public int compare(Project o1, Project o2) {
+			return o1.getCategoryName().compareToIgnoreCase(o2.getCategoryName());
+		}
+
 	}
 
 }

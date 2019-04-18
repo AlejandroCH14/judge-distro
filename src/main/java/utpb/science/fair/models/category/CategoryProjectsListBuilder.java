@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import utpb.science.fair.IntDeque;
 import utpb.science.fair.models.ListBuilder;
 import utpb.science.fair.models.project.Project;
-import utpb.science.fair.models.project.ProjectCategoryNameComparator;
 
 /**
  * Builds a List of Category objects where each Category object has a List of
@@ -26,13 +25,14 @@ public class CategoryProjectsListBuilder implements ListBuilder<Category> {
 
 	/**
 	 * The List of Projects from which to build the List of Category objects. The
-	 * given List is immediately sorted to facilitate the build process.
+	 * given List of Projcts is immediately sorted in ascending order by category to
+	 * facilitate the build process.
 	 * 
 	 * @param projects the List of Projects (non-null)
 	 */
 	public CategoryProjectsListBuilder(List<Project> projects) {
 		_projects = Objects.requireNonNull(projects);
-		Collections.sort(_projects, new ProjectCategoryNameComparator());
+		Collections.sort(_projects, Project.CATEGORY_NAME_ASCENDING);
 	}
 
 	/**

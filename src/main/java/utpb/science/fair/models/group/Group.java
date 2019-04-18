@@ -12,12 +12,13 @@ public class Group {
 
 	public static final int MAX_PROJECTS_PER_GROUP = 6;
 	public static final int MIN_PROJECTS_PER_GROUP = 2;
+	public static final int JUDGES_PER_GROUP = 3;
 
 	private String _categoryName;
 
-	private List<Project> _projects;
+	private List<Project> _projects = new ArrayList<>(MAX_PROJECTS_PER_GROUP);
 
-	private List<Judge> _judges;
+	private List<Judge> _judges = new ArrayList<>(JUDGES_PER_GROUP);
 
 	private int _groupNumber;
 
@@ -79,41 +80,38 @@ public class Group {
 
 	@Override
 	public String toString() {
-		// TODO: uncomment once judges have been assigned.
-//		List<String> judgesNames = new ArrayList<>(_judges.size());
+		List<String> judgesNames = new ArrayList<>(_judges.size());
 		List<String> projectNumbers = new ArrayList<>(_projects.size());
 
-//		for (Judge judge : _judges) {
-//			judgesNames.add(judge.getFullName());
-//		}
+		for (Judge judge : _judges) {
+			judgesNames.add(judge.getFullName());
+		}
 
 		for (Project project : _projects) {
 			projectNumbers.add(String.valueOf(project.getNumber()));
 		}
 
-//		String judges = String.join(",", judgesNames);
+		String judges = String.join(",", judgesNames);
 		String projects = String.join(",", projectNumbers);
 
 		// ready to print out to file
 		// category name, group number, judges, project numbers
-//		return String.format("Group: %s_%d%nJudges: %s%nProjects: %s%n%n", _categoryName, _groupNumber, judges,
-//				projects);
-
-		return String.format("%s_%d%nProjects: %s%n%n", _categoryName, _groupNumber, projects);
+		return String.format("Group: %s_%d%nJudges: %s%nProjects: %s%n%n", _categoryName, _groupNumber, judges,
+				projects);
 	}
-	
+
 	/**
 	 * Sorts or prioritizes the Group with the smallest project count.
 	 */
-	public static final Comparator<Group> PROJECT_COUNT_COMPARATOR = new ProjectCountComparator();
-	
+	public static final Comparator<Group> LEAST_PROJECT_COUNT = new ProjectCountComparator();
+
 	private static class ProjectCountComparator implements Comparator<Group> {
 
 		@Override
 		public int compare(Group o1, Group o2) {
 			return o1.getProjects().size() - o2.getProjects().size();
 		}
-		
+
 	}
 
 }
