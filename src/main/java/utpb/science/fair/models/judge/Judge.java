@@ -15,7 +15,7 @@ public class Judge {
 	/**
 	 * The number of projects this judge will oversee.
 	 */
-	private int _projectCount;
+	private int _projectCount = 0;
 
 	public Judge(String firstName, String lastName, List<String> categories) {
 		_firstName = firstName;
@@ -36,12 +36,13 @@ public class Judge {
 		_projectCount = newCount;
 	}
 
-	public void incrementProjectCount() {
-		_projectCount++;
-	}
-
-	public void decrementProjectCount() {
-		_projectCount--;
+	/**
+	 * Will add the given value to the current project count.
+	 * 
+	 * @param value positive or negative
+	 */
+	public void addToProjectCount(int value) {
+		_projectCount += value;
 	}
 
 	public List<String> getCategories() {
@@ -62,7 +63,7 @@ public class Judge {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_categories, _firstName, _lastName);
+		return Objects.hash(_categories, _firstName, _lastName, _projectCount);
 	}
 
 	@Override
@@ -74,21 +75,21 @@ public class Judge {
 		if (getClass() != obj.getClass())
 			return false;
 		Judge other = (Judge) obj;
-		return Objects.equals(_categories, other._categories) && Objects.equals(_firstName, other._firstName)
-				&& Objects.equals(_lastName, other._lastName);
+		return _projectCount == other._projectCount && Objects.equals(_categories, other._categories)
+				&& Objects.equals(_firstName, other._firstName) && Objects.equals(_lastName, other._lastName);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Judge[firstName=%s, lastName=%s, categories=[%s]]", _firstName, _lastName,
-				String.join(",", _categories));
+		return String.format("Judge[firstName=%s, lastName=%s, projectCount=%d, categoryCount=%d]", _firstName,
+				_lastName, _projectCount, _categories.size());
 	}
 
 	/**
 	 * Sorts or prioritizes the Judge with the least amount of Categories that the
 	 * Judge can oversee.
 	 */
-	public static final Comparator<Judge> LEAST_CATEGORY_COUNT = new CategoryCountComparator();
+	public static final Comparator<Judge> SMALLEST_CATEGORY_COUNT = new CategoryCountComparator();
 
 	private static class CategoryCountComparator implements Comparator<Judge> {
 

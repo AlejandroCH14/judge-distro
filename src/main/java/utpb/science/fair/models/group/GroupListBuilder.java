@@ -14,6 +14,7 @@ public class GroupListBuilder implements Builder<List<Group>> {
 
 	public GroupListBuilder(Category category) {
 		_category = Objects.requireNonNull(category);
+		Objects.requireNonNull(category.getProjects());
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class GroupListBuilder implements Builder<List<Group>> {
 		if (totalProjects <= 6) {
 			groupProjects = categoryProjects.subList(0, totalProjects);
 			groups.add(new Group(groupNumber, _category.getName(), groupProjects));
+			_category.setGroups(groups);
 			return groups;
 		}
 
@@ -55,6 +57,8 @@ public class GroupListBuilder implements Builder<List<Group>> {
 			groupProjects = categoryProjects.subList(total, totalProjects);
 			groups.add(new Group(groupNumber++, _category.getName(), groupProjects));
 		}
+
+		_category.setGroups(groups);
 
 		return groups;
 	}

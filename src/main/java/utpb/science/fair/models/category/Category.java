@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import utpb.science.fair.models.group.Group;
 import utpb.science.fair.models.judge.Judge;
 import utpb.science.fair.models.project.Project;
 
@@ -31,6 +32,8 @@ public class Category implements Comparable<Category> {
 
 	private List<Judge> _judges = new LinkedList<>();
 
+	private List<Group> _groups = new LinkedList<>();
+
 	public Category(String name) {
 		_name = Objects.requireNonNull(name);
 	}
@@ -48,6 +51,10 @@ public class Category implements Comparable<Category> {
 		return _projects;
 	}
 
+	public void setProjects(List<Project> projects) {
+		_projects = Objects.requireNonNull(projects);
+	}
+
 	public boolean addProject(Project project) {
 		return _projects.add(Objects.requireNonNull(project));
 	}
@@ -61,20 +68,28 @@ public class Category implements Comparable<Category> {
 	}
 
 	public void setJudges(List<Judge> judges) {
-		_judges = judges;
+		_judges = Objects.requireNonNull(judges);
 	}
 
 	public boolean addJudge(Judge judge) {
-		return _judges.add(judge);
+		return _judges.add(Objects.requireNonNull(judge));
 	}
 
 	public boolean removeJudge(Judge judge) {
-		return _judges.remove(judge);
+		return _judges.remove(Objects.requireNonNull(judge));
+	}
+
+	public List<Group> getGroups() {
+		return _groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		_groups = Objects.requireNonNull(groups);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_judges, _name, _projects);
+		return Objects.hash(_judges, _name, _projects, _groups);
 	}
 
 	@Override
@@ -87,7 +102,7 @@ public class Category implements Comparable<Category> {
 			return false;
 		Category other = (Category) obj;
 		return Objects.equals(_judges, other._judges) && Objects.equals(_name, other._name)
-				&& Objects.equals(_projects, other._projects);
+				&& Objects.equals(_projects, other._projects) && Objects.equals(_groups, other._groups);
 	}
 
 	@Override
@@ -97,8 +112,8 @@ public class Category implements Comparable<Category> {
 
 	@Override
 	public String toString() {
-		return String.format("Category[name=%-30s, judgeCount=%d, projectCount=%d]", _name, _judges.size(),
-				_projects.size());
+		return String.format("Category[name=%s, judgeCount=%d, groupCount=%d, projectCount=%d]", _name, _judges.size(),
+				_groups.size(), _projects.size());
 	}
 
 	/**

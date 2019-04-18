@@ -103,7 +103,7 @@ public class Group implements Comparable<Group> {
 	/**
 	 * Sorts or prioritizes the Group with the smallest project count.
 	 */
-	public static final Comparator<Group> LEAST_PROJECT_COUNT = new ProjectCountComparator();
+	public static final Comparator<Group> SMALLEST_PROJECT_COUNT = new ProjectCountComparator();
 
 	private static class ProjectCountComparator implements Comparator<Group> {
 
