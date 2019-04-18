@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import utpb.science.fair.IntDeque;
-import utpb.science.fair.models.ListBuilder;
+import utpb.science.fair.models.Builder;
 import utpb.science.fair.models.project.Project;
 
 /**
@@ -15,7 +15,7 @@ import utpb.science.fair.models.project.Project;
  * Projects associated with said Category.
  * 
  */
-public class CategoryProjectsListBuilder implements ListBuilder<Category> {
+public class CategoryProjectsListBuilder implements Builder<List<Category>> {
 
 	/**
 	 * A sorted array of all available Categories.

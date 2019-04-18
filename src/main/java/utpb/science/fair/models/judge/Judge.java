@@ -12,11 +12,36 @@ public class Judge {
 	private final List<String> _categories;
 	private final String _firstName;
 	private final String _lastName;
+	/**
+	 * The number of projects this judge will oversee.
+	 */
+	private int _projectCount;
 
 	public Judge(String firstName, String lastName, List<String> categories) {
 		_firstName = firstName;
 		_lastName = lastName;
-		_categories = categories;
+		_categories = Objects.requireNonNull(categories);
+	}
+
+	/**
+	 * Returns the number of projects that this judge is currently judging.
+	 * 
+	 * @return the number of projects that this judge is currently judging.
+	 */
+	public int getProjectCount() {
+		return _projectCount;
+	}
+
+	public void setProjectCount(int newCount) {
+		_projectCount = newCount;
+	}
+
+	public void incrementProjectCount() {
+		_projectCount++;
+	}
+
+	public void decrementProjectCount() {
+		_projectCount--;
 	}
 
 	public List<String> getCategories() {

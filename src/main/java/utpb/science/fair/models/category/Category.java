@@ -97,7 +97,8 @@ public class Category implements Comparable<Category> {
 
 	@Override
 	public String toString() {
-		return "Category [_name=" + _name + "]";
+		return String.format("Category[name=%-30s, judgeCount=%d, projectCount=%d]", _name, _judges.size(),
+				_projects.size());
 	}
 
 	/**

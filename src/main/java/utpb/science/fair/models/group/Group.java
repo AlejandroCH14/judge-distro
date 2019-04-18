@@ -8,7 +8,7 @@ import java.util.Objects;
 import utpb.science.fair.models.judge.Judge;
 import utpb.science.fair.models.project.Project;
 
-public class Group {
+public class Group implements Comparable<Group> {
 
 	public static final int MAX_PROJECTS_PER_GROUP = 6;
 	public static final int MIN_PROJECTS_PER_GROUP = 2;
@@ -28,7 +28,7 @@ public class Group {
 		_projects = Objects.requireNonNull(projects);
 	}
 
-	public String get_categoryName() {
+	public String getCategoryName() {
 		return _categoryName;
 	}
 
@@ -112,6 +112,11 @@ public class Group {
 			return o1.getProjects().size() - o2.getProjects().size();
 		}
 
+	}
+
+	@Override
+	public int compareTo(Group o) {
+		return _categoryName.compareToIgnoreCase(o.getCategoryName());
 	}
 
 }

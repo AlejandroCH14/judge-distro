@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import utpb.science.fair.models.ListBuilder;
+import utpb.science.fair.models.Builder;
 import utpb.science.fair.models.category.Category;
 import utpb.science.fair.models.project.Project;
 
-public class GroupListBuilder implements ListBuilder<Group> {
+public class GroupListBuilder implements Builder<List<Group>> {
 
 	private final Category _category;
 
