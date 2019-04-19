@@ -44,12 +44,20 @@ public class Group implements Comparable<Group> {
 		_projects = Objects.requireNonNull(projects);
 	}
 
+	public boolean addProject(Project project) {
+		return _projects.add(Objects.requireNonNull(project));
+	}
+
 	public List<Judge> getJudges() {
 		return _judges;
 	}
 
 	public void setJudges(List<Judge> judges) {
 		_judges = Objects.requireNonNull(judges);
+	}
+
+	public boolean addJudge(Judge judge) {
+		return _judges.add(Objects.requireNonNull(judge));
 	}
 
 	public int getGroupNumber() {
@@ -101,11 +109,25 @@ public class Group implements Comparable<Group> {
 	}
 
 	/**
+	 * Sorts or prioritizes the Group with largest project count.
+	 */
+	public static final Comparator<Group> LARGEST_PROJECT_COUNT = new LargestProjectCountComparator();
+
+	private static class LargestProjectCountComparator implements Comparator<Group> {
+
+		@Override
+		public int compare(Group o1, Group o2) {
+			return o2.getProjects().size() - o1.getProjects().size();
+		}
+
+	}
+
+	/**
 	 * Sorts or prioritizes the Group with the smallest project count.
 	 */
-	public static final Comparator<Group> SMALLEST_PROJECT_COUNT = new ProjectCountComparator();
+	public static final Comparator<Group> SMALLEST_PROJECT_COUNT = new SmallestProjectCountComparator();
 
-	private static class ProjectCountComparator implements Comparator<Group> {
+	private static class SmallestProjectCountComparator implements Comparator<Group> {
 
 		@Override
 		public int compare(Group o1, Group o2) {

@@ -1,10 +1,18 @@
 package utpb.science.fair.models.judge;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import utpb.science.fair.models.project.Project;
+
 public class Judge {
+
+	/**
+	 * The maximum amount of projects that a single judge can oversee.
+	 */
+	public static final int MAX_PROJECTS = 6;
 
 	/**
 	 * A list of categories the each judge is willing to judge.
@@ -17,9 +25,11 @@ public class Judge {
 	 */
 	private int _projectCount = 0;
 
+//	private List<Project> _projects = new LinkedList<>();
+
 	public Judge(String firstName, String lastName, List<String> categories) {
-		_firstName = firstName;
-		_lastName = lastName;
+		_firstName = Objects.requireNonNull(firstName);
+		_lastName = Objects.requireNonNull(lastName);
 		_categories = Objects.requireNonNull(categories);
 	}
 

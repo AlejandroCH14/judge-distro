@@ -24,8 +24,10 @@ public class JudgeDistributor {
 		_resources = createResourcesQueue(judges);
 		_tasks = createTaskQueue(categories);
 	}
-	
-	
+
+	private void distribute() {
+
+	}
 
 	private PriorityQueue<Judge> createResourcesQueue(List<Judge> judges) {
 		PriorityQueue<Judge> q = new PriorityQueue<Judge>(Judge.SMALLEST_CATEGORY_COUNT);

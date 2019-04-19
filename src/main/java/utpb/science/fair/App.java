@@ -1,13 +1,13 @@
 package utpb.science.fair;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.TreeMap;
 
 import utpb.science.fair.models.category.Category;
 import utpb.science.fair.models.category.CategoryProjectsListBuilder;
@@ -40,42 +40,94 @@ public class App {
 		app.assignJudgesToCategories(categories, judges);
 
 		List<List<Group>> scienceFairGroups = app.createAllCategoryGroups(categories);
-		
-		categories.stream().forEach(System.out::println);
 
 		_resources = app.createResourcesQueue(judges);
 		_tasks = app.createTaskQueue(categories);
 
-//		app.assignJudgesToGroups(scienceFairGroups, categories, judges);
+		app.assignJudgesToGroups(scienceFairGroups, categories, judges);
 
 	}
 
 	public void assignJudgesToGroups(List<List<Group>> scienceFair, List<Category> categories, List<Judge> judges) {
-		// (1) find category with highest priority -> category contains a list of Judges
-		Category hpCategory = _tasks.peek();
+		// (1) find category with highest priority -> category contains a list of Judges & list of Groups
+		while (!_tasks.isEmpty() && !_resources.isEmpty()) {
+			Category hpCategory = _tasks.peek();
+			assignJudgesToGroup(hpCategory);
+		}
 		
-		// (2) get all groups in that category -> put into priority queue where group
-		// with smallest project count has highest priority
-		// (3) find group with the smallest project count -> dequeue
-		// (4) find judge with the smallest category count -> dequeue
-		// (5) assign judge to group and increment the judge's number of overseen
-		// projects -> if (judge.projectCount >= 6) dequeue judge from available
-		// resources
-		Judge hpJudge = _resources.peek();
-
-		Map<String, List<Group>> groupTree = new TreeMap<String, List<Group>>();
-
-		for (List<Group> groups : scienceFair) {
-			groupTree.put(groups.get(0).getCategoryName(), groups);
+		for (var category : categories) {
+			System.out.println(category.getGroups());
 		}
-
-		for (var key : groupTree.entrySet()) {
-			System.out.println(key.getValue());
-		}
+		
+		System.out.println("\n==============================================================================");
+		System.out.println("leftover judges");
+		System.out.println("==============================================================================");
+		
+		judges.stream()
+			.filter(j -> j.getProjectCount() < 6)
+			.forEach(System.out::println);
 	}
 
-	public void assignJudgesToGroup(List<Group> groups, Category category) {
+	public void assignJudgesToGroup(Category category) {
+		// (2) get all groups in that category -> put into priority queue where group
+		// (3) find group with the smallest project count -> dequeue
+		PriorityQueue<Group> groupsQ = new PriorityQueue<Group>(Group.LARGEST_PROJECT_COUNT);
+		groupsQ.addAll(category.getGroups());
 
+		// (4) find judge with the smallest category count -> dequeue
+		PriorityQueue<Judge> judgesQ = new PriorityQueue<Judge>(Judge.SMALLEST_CATEGORY_COUNT);
+		judgesQ.addAll(category.getJudges());
+
+		Deque<Judge> queue = new ArrayDeque<>();
+		List<Judge> groupJudges = null;
+		Judge judge = null;
+		int projectCount = 0, maxProjectsPerJudge = Judge.MAX_PROJECTS, maxJudgesPerGroup = Group.JUDGES_PER_GROUP;
+		var resources = _resources;
+		var tasks = _tasks;
+
+		while (!judgesQ.isEmpty() && !groupsQ.isEmpty()) {
+			judge = judgesQ.poll();
+
+			if (!queue.isEmpty() && queue.peekFirst().getCategories().size() < judge.getCategories().size()) {
+				judge = queue.poll();
+			}
+
+			for (Group group : groupsQ) {
+				// do we even need to do work?
+				groupJudges = group.getJudges();
+				if (groupJudges.size() == maxJudgesPerGroup) {
+					groupsQ.remove(group);
+					continue;
+				}
+
+				// guess so ...
+				projectCount = group.getProjects().size();
+
+				// check if adding the judge to the current group will exceed the judge's limit
+				if (judge.getProjectCount() + projectCount > maxProjectsPerJudge) {
+					break;
+				}
+
+				// (5) assign judge to group and increment the judge's number of overseen
+				// projects -> if (judge.projectCount >= 6) dequeue judge from available
+				// resources
+				if (groupJudges.contains(judge)) {
+					judgesQ.remove(judge);
+					queue.remove(judge);
+					break;
+				}
+				group.addJudge(judge);
+				judge.addToProjectCount(projectCount);
+			}
+
+			if (judge.getProjectCount() == maxProjectsPerJudge) {
+				resources.remove(judge);
+			} else if (judge.getProjectCount() < maxProjectsPerJudge && !groupJudges.contains(judge)) {
+				queue.add(judge);
+			}
+		}
+
+		tasks.remove(category);
 	}
 
 	public PriorityQueue<Judge> createResourcesQueue(List<Judge> judges) {
