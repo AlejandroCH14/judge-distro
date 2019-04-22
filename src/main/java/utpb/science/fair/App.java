@@ -11,19 +11,18 @@ import utpb.science.fair.util.FileUtil;
 
 public class App {
 
-	public static final String PROJECTS_FILE = "src/test/resources/projects/given-projects.txt";
+	public static final String PROJECTS_FILE = "src/test/resources/projects/Alejandro'sTest(P).txt";
 
-	public static final String JUDGES_FILE = "src/test/resources/given-judges.txt";
+	public static final String JUDGES_FILE = "src/test/resources/projects/Alejandro'sTest(J).txt";
 
 	public static void main(String[] args) throws IOException {
 
 		List<Project> projects = FileUtil.readProjectsFile(PROJECTS_FILE);
 
 		List<Judge> judges = FileUtil.readJudgesFiles(JUDGES_FILE);
-
+		
 		JudgeDistributor judgeDistributor = new JudgeDistributor(judges, projects);
 		judgeDistributor.distribute();
-
 		var scienceFair = judgeDistributor.getScienceFairGroups();
 		
 		for (List<Group> groups : scienceFair) {

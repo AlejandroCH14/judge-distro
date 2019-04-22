@@ -30,7 +30,7 @@ public class JudgeDistributor {
 		_judges = Objects.requireNonNull(judges);
 		_projects = Objects.requireNonNull(projects);
 		_categories = new CategoryProjectsListBuilder(projects).build();
-		
+
 		_resources = createResourcesQueue(judges);
 		_tasks = createTaskQueue(_categories);
 		
