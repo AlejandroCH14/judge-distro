@@ -25,7 +25,7 @@ public class JudgeDistributor {
 	private final List<Category> _categories;
 	private final List<Judge> _judges;
 	private final List<Project> _projects;
-	
+
 	public JudgeDistributor(List<Judge> judges, List<Project> projects) {
 		_judges = Objects.requireNonNull(judges);
 		_projects = Objects.requireNonNull(projects);
@@ -33,7 +33,7 @@ public class JudgeDistributor {
 
 		_resources = createResourcesQueue(judges);
 		_tasks = createTaskQueue(_categories);
-		
+
 		assignJudgesToCategories(_categories, judges);
 		_scienceFairGroups = createScienceFairGroups(_categories);
 	}
@@ -42,8 +42,8 @@ public class JudgeDistributor {
 		final PriorityQueue<Judge> resources = _resources;
 		final PriorityQueue<Category> tasks = _tasks;
 
-		// (1) find category with highest priority -> category contains a list of Judges
-		// & list of Groups
+		// (1) find category with highest priority; category contains a list of Judges &
+		// list of Groups
 		while (!tasks.isEmpty() && !resources.isEmpty()) {
 			Category hpCategory = tasks.peek();
 			assignJudgesToGroup(hpCategory);
@@ -67,11 +67,19 @@ public class JudgeDistributor {
 		final PriorityQueue<Judge> resources = _resources;
 		final PriorityQueue<Category> tasks = _tasks;
 
-		while (!judgesQ.isEmpty() && !groupsQ.isEmpty()) {
-			judge = judgesQ.poll();
-
-			if (!queue.isEmpty() && queue.peekFirst().getCategories().size() < judge.getCategories().size()) {
+		while ((!judgesQ.isEmpty() || !queue.isEmpty()) && !groupsQ.isEmpty()) {
+			if (judgesQ.isEmpty())
 				judge = queue.poll();
+			else
+				judge = judgesQ.poll();
+
+			//since a group can be removed from the groupQ inside the for loop we have to make this check
+			if (!queue.isEmpty() && queue.peekFirst().getCategories().size() < judge.getCategories().size()) {
+				// we swap judges
+				Judge temp = new Judge();
+				temp = judge;
+				judge = queue.poll();
+				queue.add(temp);
 			}
 
 			for (Group group : groupsQ) {
@@ -87,6 +95,7 @@ public class JudgeDistributor {
 
 				// check if adding the judge to the current group will exceed the judge's limit
 				if (judge.getProjectCount() + projectCount > maxProjectsPerJudge) {
+					judgesQ.remove(judge);
 					break;
 				}
 
@@ -96,15 +105,28 @@ public class JudgeDistributor {
 				if (groupJudges.contains(judge)) {
 					judgesQ.remove(judge);
 					queue.remove(judge);
+					judge = null;
 					break;
 				}
+
 				group.addJudge(judge);
 				judge.addToProjectCount(projectCount);
-			}
 
-			if (judge.getProjectCount() == maxProjectsPerJudge) {
-				resources.remove(judge);
-			} else if (judge.getProjectCount() < maxProjectsPerJudge && !groupJudges.contains(judge)) {
+				if (judge.getProjectCount() == maxProjectsPerJudge) {
+					judgesQ.remove(judge);
+					resources.remove(judge);
+					judge = null; // maxed out
+					break;
+				}
+			} // end of while
+
+			// a maxed out judge ... avoids having to search both the "groupJudges list" & "judgesQ"
+			// searching both takes O(n), thus 2*O(n) time is saved by this check
+			if (judge == null)
+				continue;
+
+			if (judge.getProjectCount() < maxProjectsPerJudge
+					&& (!groupJudges.contains(judge) || judgesQ.contains(judge))) {
 				queue.add(judge);
 			}
 		}
@@ -131,11 +153,11 @@ public class JudgeDistributor {
 	}
 
 	private List<List<Group>> createScienceFairGroups(final List<Category> categories) {
-		// a science fair will have 1...* many groups
+		// a science fair will have 1...* groups
 		List<List<Group>> scienceFairGroups = new LinkedList<>();
 		List<Group> groups = new LinkedList<>();
 
-		// each category will have 1...* many to groups
+		// each category will have 1...* to groups
 		for (Category category : categories) {
 			groups = new GroupListBuilder(category).build();
 			scienceFairGroups.add(groups);
@@ -167,7 +189,7 @@ public class JudgeDistributor {
 	public List<Judge> getJudges() {
 		return _judges;
 	}
-	
+
 	public List<Project> getProjects() {
 		return _projects;
 	}

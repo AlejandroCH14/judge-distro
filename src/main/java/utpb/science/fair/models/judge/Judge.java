@@ -1,11 +1,8 @@
 package utpb.science.fair.models.judge;
 
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
-import utpb.science.fair.models.project.Project;
 
 public class Judge {
 
@@ -17,15 +14,16 @@ public class Judge {
 	/**
 	 * A list of categories the each judge is willing to judge.
 	 */
-	private final List<String> _categories;
-	private final String _firstName;
-	private final String _lastName;
+	private List<String> _categories;
+	private String _firstName;
+	private String _lastName;
 	/**
 	 * The number of projects this judge will oversee.
 	 */
 	private int _projectCount = 0;
 
-//	private List<Project> _projects = new LinkedList<>();
+	public Judge() {
+	}
 
 	public Judge(String firstName, String lastName, List<String> categories) {
 		_firstName = Objects.requireNonNull(firstName);
@@ -91,7 +89,7 @@ public class Judge {
 
 	@Override
 	public String toString() {
-		return String.format("Judge[firstName=%s, lastName=%s, projectCount=%d, categoryCount=%d]", _firstName,
+		return String.format("Judge[firstName=%s, lastName=%s, projectCount=%d, categoryCount=%d]%n", _firstName,
 				_lastName, _projectCount, _categories.size());
 	}
 

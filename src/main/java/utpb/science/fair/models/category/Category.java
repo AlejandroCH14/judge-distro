@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import utpb.science.fair.models.group.Group;
 import utpb.science.fair.models.judge.Judge;
