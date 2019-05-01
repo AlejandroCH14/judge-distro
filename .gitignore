@@ -27,10 +27,12 @@ hs_err_pid*
 .classpath
 .project
 /target/
+target/
 
 # idea
 .idea/
 *.iml
 /bin/
+bin/
 
 .vscode/
