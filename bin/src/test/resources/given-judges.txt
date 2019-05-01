@@ -1,0 +1,19 @@
+Ben Miller: 		Chemistry
+Joe Hansen: 		Chemistry, Earth/Space Science
+Jill Clemson:		Behavioral/Social Science, Life Science, Environmental Science
+Cathy Lively:		Life Science
+Fransico Aranda:	Chemistry, Mathematics/Physics
+Betty Baines:		Environmental Science
+Jim Green:			Life Science
+Bill Jones:			Chemistry, Behavioral/Social Science, Earth/Space Science, Mathematics/Physics, Environmental Science
+Susan Garcia:		Life Science
+Jamie Aguirre: 		Mathematics/Physics
+Carla Phillips:		Earth/Space Science
+Tony Brown:			Life Science
+Joseph Martin:		Life Science, Environmental Science
+Chris Suarez:		Environmental Science, Behavioral/Social Science
+Sara Rodriguez:		Chemistry
+Karen Simi:			Mathematics/Physics, Environmental Science
+Maria Gonzales:		Life Science, Chemistry
+Leticia Jones:		Chemistry
+Jamie Garcia:		Earth/Space Science, Mathematics/Physics, Chemistry

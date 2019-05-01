@@ -10,7 +10,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		Parent root = FXMLLoader.load(getClass().getResource("/GUI.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
 		primaryStage.setTitle("Judge Scheduler");
 		primaryStage.setScene(new Scene(root, 650, 450));
 		primaryStage.show();

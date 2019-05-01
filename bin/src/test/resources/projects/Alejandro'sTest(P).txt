@@ -1,0 +1,38 @@
+403 Chemistry
+422 Life Science
+423 Mathematics/Physics
+426 Mathematics/Physics
+425 Mathematics/Physics
+424 Mathematics/Physics
+427 Mathematics/Physics
+428 Life Science
+429 Mathematics/Physics
+430 Life Science
+412 Chemistry
+400 Behavioral/Social Science
+407 Chemistry
+410 Chemistry
+417 Life Science
+415 Environmental Science
+419 Life Science
+411 Chemistry
+420 Mathematics/Physics
+421 Mathematics/Physics
+408 Chemistry
+431 Environmental Science
+432 Environmental Science
+433 Environmental Science
+434 Earth/Space Science
+435 Earth/Space Science
+436 Earth/Space Science
+437 Environmental Science
+409 Chemistry
+406 Chemistry
+401 Behavioral/Social Science
+416 Environmental Science
+413 Earth/Space Science
+405 Chemistry
+414 Environmental Science
+ 402	Behavioral/Social Science
+ 	418	Life Science
+ 404		Chemistry
