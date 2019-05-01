@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import utpb.science.fair.models.category.Category;
 import utpb.science.fair.models.category.CategoryProjectsListBuilder;
@@ -38,7 +39,7 @@ public class JudgeDistributor {
 		_scienceFairGroups = createScienceFairGroups(_categories);
 	}
 
-	public void distribute() {
+	public synchronized void distribute() {
 		final PriorityQueue<Judge> resources = _resources;
 		final PriorityQueue<Category> tasks = _tasks;
 
@@ -53,11 +54,12 @@ public class JudgeDistributor {
 	public void assignJudgesToGroup(Category category) {
 		// (2) get all groups in that category -> put into priority queue where group
 		// (3) find group with the smallest project count -> dequeue
-		PriorityQueue<Group> groupsQ = new PriorityQueue<Group>(Group.LARGEST_PROJECT_COUNT);
-		groupsQ.addAll(category.getGroups());
+		List<Group> groups = category.getGroups();
+		PriorityBlockingQueue<Group> groupsQ = new PriorityBlockingQueue<>(groups.size(), Group.LARGEST_PROJECT_COUNT);
+		groupsQ.addAll(groups);
 
 		// (4) find judge with the smallest category count -> dequeue
-		PriorityQueue<Judge> judgesQ = new PriorityQueue<Judge>(Judge.SMALLEST_CATEGORY_COUNT);
+		PriorityQueue<Judge> judgesQ = new PriorityQueue<>(Judge.SMALLEST_CATEGORY_COUNT);
 		judgesQ.addAll(category.getJudges());
 
 		Deque<Judge> queue = new ArrayDeque<>();
@@ -167,13 +169,13 @@ public class JudgeDistributor {
 	}
 
 	private PriorityQueue<Judge> createResourcesQueue(final List<Judge> judges) {
-		PriorityQueue<Judge> q = new PriorityQueue<Judge>(Judge.SMALLEST_CATEGORY_COUNT);
+		PriorityQueue<Judge> q = new PriorityQueue<>(Judge.SMALLEST_CATEGORY_COUNT);
 		q.addAll(judges);
 		return q;
 	}
 
 	public PriorityQueue<Category> createTaskQueue(final List<Category> categories) {
-		PriorityQueue<Category> q = new PriorityQueue<Category>(Category.GREATEST_PROJECT_COUNT);
+		PriorityQueue<Category> q = new PriorityQueue<>(Category.GREATEST_PROJECT_COUNT);
 		q.addAll(categories);
 		return q;
 	}

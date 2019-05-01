@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="utpb.science.fair.MainController">
+   <children>
+        <AnchorPane prefHeight="450.0" prefWidth="650.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="240.0" layoutY="38.0" text="Judge-Distro">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Label layoutX="48.0" layoutY="119.0" text="Projects:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="48.0" layoutY="210.0" text="Judges:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="projectsTextField" editable="false" focusTraversable="false" layoutX="130.0" layoutY="113.0" prefHeight="41.0" prefWidth="251.0" style="-fx-border-color: #FF803F; -fx-border-radius: 5px; -fx-background-radius: 5px;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="judgesTextField" editable="false" focusTraversable="false" layoutX="130.0" layoutY="204.0" prefHeight="41.0" prefWidth="251.0" style="-fx-border-color: #FF803F; -fx-border-radius: 5px; -fx-background-radius: 5px;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <Label layoutX="48.0" layoutY="295.0" text="Output:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="outFileTextField" editable="false" focusTraversable="false" layoutX="130.0" layoutY="289.0" prefHeight="41.0" prefWidth="251.0" style="-fx-border-color: #FF803F; -fx-border-radius: 5px; -fx-background-radius: 5px;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <Button layoutX="130.0" layoutY="362.0" minHeight="40.0" mnemonicParsing="false" onAction="#schedule" prefHeight="40.0" prefWidth="251.0" style="-fx-background-color: #FF803F; -fx-border-radius: 5px;" text="Distrubute" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <effect>
+                        <DropShadow color="#a8a8a8" height="5.0" offsetX="-1.5" offsetY="2.0" radius="2.0" width="5.0" />
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            <Button layoutX="414.0" layoutY="119.0" mnemonicParsing="false" onAction="#chooseProjectsFile" text="Choose File">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="414.0" layoutY="210.0" mnemonicParsing="false" onAction="#chooseJudgesFile" text="Choose File">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="414.0" layoutY="295.0" mnemonicParsing="false" onAction="#chooseOutFile" prefHeight="30.0" prefWidth="91.0" text="Save As">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <ProgressBar fx:id="progressBar" layoutX="381.0" layoutY="47.0" prefWidth="200.0" progress="0.0" visible="false" />
+            </children>
+        </AnchorPane>
+   </children>
+</AnchorPane>
