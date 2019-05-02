@@ -48,7 +48,7 @@
                         <Font size="18.0" />
                     </font>
                 </TextField>
-                <Button layoutX="130.0" layoutY="362.0" minHeight="40.0" mnemonicParsing="false" onAction="#schedule" prefHeight="40.0" prefWidth="251.0" style="-fx-background-color: #FF803F; -fx-border-radius: 5px;" text="Distrubute" textFill="WHITE">
+                <Button layoutX="130.0" layoutY="362.0" minHeight="40.0" mnemonicParsing="false" onAction="#schedule" prefHeight="40.0" prefWidth="251.0" style="-fx-background-color: #FF803F; -fx-border-radius: 5px;" text="Distribute" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
                     </font>
